@@ -9,12 +9,12 @@ See: .planning/PROJECT.md (updated 2026-04-22)
 
 ## Current Position
 
-Phase: Fase 5 — Migração do Frontend
-Plan: 05-03 (próximo) — 05-02 concluído
-Status: Fases 1-4 completas. Fase 5 em andamento (2/3 planos).
-Last activity: 2026-04-22 — 05-02 executado: services/gemini.ts removido, GEMINI_API_KEY confinada ao servidor
+Phase: Fase 6 — Docker + Deploy
+Plan: 06-03 (próximo) — 06-02 concluído
+Status: Fases 1-5 completas. Fase 6 em andamento (2/3 planos).
+Last activity: 2026-04-22 — 05-03 executado: AuthGuard integrado no entry point, TypeScript sem erros, Fase 5 completa
 
-Progress: [█████████░] 80%
+Progress: [█████████░] 90%
 
 ## Performance Metrics
 
@@ -50,5 +50,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Completed 05-02-PLAN.md — services/gemini.ts removido, GEMINI_API_KEY confinada ao servidor
+Stopped at: Completed 05-03-PLAN.md — AuthGuard integrado no entry point, Fase 5 completa
 Resume file: None

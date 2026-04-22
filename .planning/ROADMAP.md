@@ -95,7 +95,7 @@ Plans:
 Plans:
 - [x] 05-01: Substituir todas as chamadas `localStorage` em `App.tsx` por `fetch('/api/terms/...')`
 - [x] 05-02: Substituir chamadas `services/gemini.ts` por `fetch('/api/gemini/...')` — remover services/gemini.ts
-- [ ] 05-03: Integrar `AuthGuard` no `App.tsx` e testar fluxo completo
+- [x] 05-03: Integrar `AuthGuard` no `App.tsx` e testar fluxo completo
 
 #### Fase 6: Docker + Deploy
 
@@ -121,5 +121,5 @@ Plans:
 | 2. Autenticação Better Auth | 3/3 | Completa | 2026-04-22 |
 | 3. API de Termos | 2/2 | Completa | 2026-04-22 |
 | 4. Proxy Gemini | 2/2 | Completa | 2026-04-22 |
-| 5. Migração do Frontend | 2/3 | Em execução | - |
+| 5. Migração do Frontend | 3/3 | Completa | 2026-04-22 |
 | 6. Docker + Deploy | 2/3 | Em andamento | - |
