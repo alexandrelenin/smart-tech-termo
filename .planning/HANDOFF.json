@@ -1,0 +1,102 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-04-22T14:33:00",
+  "phase": "01",
+  "phase_name": "backend-foundation",
+  "phase_dir": ".planning/phases/01-backend-foundation",
+  "plan": 3,
+  "task": 1,
+  "total_tasks": 3,
+  "status": "paused",
+  "completed_tasks": [
+    {
+      "id": "01-01-task1",
+      "name": "Instalar dependências do servidor e atualizar scripts",
+      "status": "done",
+      "commit": "e2ebdf6"
+    },
+    {
+      "id": "01-01-task2",
+      "name": "Criar .env e proteger com .gitignore",
+      "status": "done",
+      "commit": "f71017b"
+    },
+    {
+      "id": "01-02-task1",
+      "name": "Criar server/prisma.ts e prisma/schema.prisma",
+      "status": "done",
+      "commit": "a0cd574"
+    },
+    {
+      "id": "01-02-task1-fix",
+      "name": "Adaptar para Prisma 7 — prisma.config.ts e driver adapter pg",
+      "status": "done",
+      "commit": "e3dbd00"
+    },
+    {
+      "id": "01-02-task2",
+      "name": "Criar server/index.ts com Hono e rota /api/health",
+      "status": "done",
+      "commit": "e3e491e"
+    }
+  ],
+  "remaining_tasks": [
+    {
+      "id": "01-03-task1",
+      "name": "[CHECKPOINT] Garantir que o PostgreSQL local está rodando",
+      "status": "waiting_human",
+      "type": "checkpoint:human-action"
+    },
+    {
+      "id": "01-03-task2",
+      "name": "Rodar migrate dev e gerar PrismaClient",
+      "status": "not_started",
+      "type": "auto"
+    },
+    {
+      "id": "01-03-task3",
+      "name": "[CHECKPOINT] Verificar servidor Hono respondendo em /api/health",
+      "status": "not_started",
+      "type": "checkpoint:human-verify"
+    }
+  ],
+  "blockers": [
+    {
+      "description": "PostgreSQL não está rodando — necessário para prisma migrate dev",
+      "type": "human_action",
+      "workaround": "docker compose up postgres -d"
+    }
+  ],
+  "human_actions_pending": [
+    {
+      "action": "Iniciar PostgreSQL: docker compose up postgres -d",
+      "context": "Sem o banco rodando, npx prisma migrate dev falhará",
+      "blocking": true
+    },
+    {
+      "action": "Preencher .env com valores reais (BETTER_AUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GEMINI_API_KEY)",
+      "context": "Valores placeholder atuais não funcionam em produção",
+      "blocking": false
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Prisma 7.8.0 usa prisma.config.ts em vez de url no schema.prisma",
+      "rationale": "Prisma 7 removeu suporte a url no datasource block — executor auto-fixou",
+      "phase": "01"
+    },
+    {
+      "decision": "server/prisma.ts usa PrismaPg driver adapter",
+      "rationale": "Obrigatório no Prisma 7 com @prisma/adapter-pg",
+      "phase": "01"
+    },
+    {
+      "decision": ".env não commitado e deve ser recriado manualmente após merge de worktree",
+      "rationale": "Arquivos gitignored não sobrevivem ao git merge de worktrees isoladas",
+      "phase": "01"
+    }
+  ],
+  "uncommitted_files": [],
+  "next_action": "Iniciar PostgreSQL com `docker compose up postgres -d`, depois rodar /gsd-execute-phase 1 — orquestrador pula planos com SUMMARY.md e vai direto para Wave 3 (01-03)",
+  "context_notes": "Waves 1 e 2 concluídas e mergeadas. Todos os arquivos do servidor criados e validados. Falta apenas migração e verificação do healthcheck. O plano 01-03 tem autonomous:false com dois checkpoints bloqueantes."
+}
