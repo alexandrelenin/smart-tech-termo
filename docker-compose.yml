@@ -14,6 +14,9 @@ services:
   api:
     build: { context: ., dockerfile: Dockerfile.api }
     env_file: .env
+    environment:
+      # Sobrescreve DATABASE_URL do .env para usar o hostname interno do Docker
+      DATABASE_URL: postgresql://termo:termo@postgres:5432/termo
     depends_on: [postgres]
     ports:
       - "3001:3001"
