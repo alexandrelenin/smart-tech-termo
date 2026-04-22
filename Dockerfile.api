@@ -7,7 +7,9 @@ RUN npm install
 
 COPY prisma ./prisma
 COPY prisma.config.ts ./
-RUN npx prisma generate
+# Prisma generate does not need a real DB connection — pass a dummy URL so
+# prisma.config.ts can resolve the env variable during the build step.
+RUN DATABASE_URL="postgresql://x:x@localhost:5432/x" npx prisma generate
 
 COPY server ./server
 
