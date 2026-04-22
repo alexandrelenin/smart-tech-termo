@@ -5,6 +5,11 @@ services:
       POSTGRES_USER: termo
       POSTGRES_PASSWORD: termo
       POSTGRES_DB: termo
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U termo -d termo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     volumes:
       - ~/data/smart-tech-termo/postgres:/var/lib/postgresql/data
     ports:
@@ -17,7 +22,10 @@ services:
     environment:
       # Sobrescreve DATABASE_URL do .env para usar o hostname interno do Docker
       DATABASE_URL: postgresql://termo:termo@postgres:5432/termo
-    depends_on: [postgres]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
     ports:
       - "3001:3001"
     networks: [internal]
