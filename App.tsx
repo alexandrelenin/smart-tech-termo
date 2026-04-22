@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  PlusIcon, TrashIcon, SparklesIcon, PrinterIcon, 
-  ArrowPathIcon, DocumentTextIcon, BuildingOfficeIcon, 
+import {
+  PlusIcon, TrashIcon, SparklesIcon, PrinterIcon,
+  ArrowPathIcon, DocumentTextIcon, BuildingOfficeIcon,
   CpuChipIcon, ShieldCheckIcon, CloudArrowUpIcon,
   ArchiveBoxIcon, DocumentDuplicateIcon, ArrowDownTrayIcon,
   HomeIcon, GlobeAltIcon, ArrowUpTrayIcon, EnvelopeIcon,
@@ -12,8 +12,6 @@ import {
 import { LicenseItem, ReportData } from './types';
 import ReportPreview from './components/ReportPreview';
 import SmartTechLogo from './components/SmartTechLogo';
-
-const DB_KEY = 'smart_tech_reports_db';
 
 const initialData: ReportData = {
   id: Date.now().toString(),
@@ -38,31 +36,31 @@ const initialData: ReportData = {
   },
   softwareDescription: 'software de gerenciamento integrado de dados educacionais (Frequência Escolar Facial e Web Ponto)',
   items: [
-    { 
-      id: 'alunos-id', 
-      category: 'ALUNOS', 
-      quantity: '2.991', 
-      key: '102025-100FGE-RMG', 
-      description: 'Licença de aquisição perpétua de sistema informatizado, por aluno, para gerenciamento dos dados relativos à presença registrada nos dispositivos de autenticação da face e à educação municipal.' 
+    {
+      id: 'alunos-id',
+      category: 'ALUNOS',
+      quantity: '2.991',
+      key: '102025-100FGE-RMG',
+      description: 'Licença de aquisição perpétua de sistema informatizado, por aluno, para gerenciamento dos dados relativos à presença registrada nos dispositivos de autenticação da face e à educação municipal.'
     },
-    { 
-      id: 'servidores-id', 
-      category: 'SERVIDORES', 
-      quantity: '450', 
-      key: '102025-100WPT-RMG', 
-      description: 'Licença de aquisição perpétua de sistema informatizado, por servidor, para gerenciamento dos dados relativos à presença registrada nos dispositivos de autenticação da face.' 
+    {
+      id: 'servidores-id',
+      category: 'SERVIDORES',
+      quantity: '450',
+      key: '102025-100WPT-RMG',
+      description: 'Licença de aquisição perpétua de sistema informatizado, por servidor, para gerenciamento dos dados relativos à presença registrada nos dispositivos de autenticação da face.'
     }
   ],
   techResponsible: { name: 'Antônio Alves Reis Neto', rg: '862086' },
-  installation: { 
-    environment: 'Cloud', 
-    restrictedTo: 'Secretaria Municipal de Educação de Ipanema/MG', 
-    accessLink: 'https://ipanema.pontoid.com.br/' 
+  installation: {
+    environment: 'Cloud',
+    restrictedTo: 'Secretaria Municipal de Educação de Ipanema/MG',
+    accessLink: 'https://ipanema.pontoid.com.br/'
   },
-  credentials: { 
-    username: '02549389140.ipanema', 
-    password: '02549389140', 
-    city: 'Ipanema / MG' 
+  credentials: {
+    username: '02549389140.ipanema',
+    password: '02549389140',
+    city: 'Ipanema / MG'
   }
 };
 
@@ -71,15 +69,30 @@ const App: React.FC = () => {
   const [savedReports, setSavedReports] = useState<ReportData[]>([]);
   const [showPreview, setShowPreview] = useState(false);
   const [activeTab, setActiveTab] = useState('Geral');
-  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success'>('idle');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'success' | 'error'>('idle');
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isLoadingReports, setIsLoadingReports] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const reportRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem(DB_KEY);
-    if (stored) {
-      try { setSavedReports(JSON.parse(stored)); } catch (e) { console.error(e); }
-    }
+    setIsLoadingReports(true);
+    setLoadError(null);
+    fetch('/api/terms')
+      .then(res => {
+        if (!res.ok) throw new Error(`Erro ao carregar termos: ${res.status}`);
+        return res.json() as Promise<ReportData[]>;
+      })
+      .then(reports => {
+        setSavedReports(reports);
+      })
+      .catch(err => {
+        console.error('Erro ao carregar termos:', err);
+        setLoadError('Não foi possível carregar os termos. Verifique a conexão com o servidor.');
+      })
+      .finally(() => {
+        setIsLoadingReports(false);
+      });
   }, []);
 
   const handleUpdate = (path: string, value: any) => {
@@ -97,7 +110,7 @@ const App: React.FC = () => {
   };
 
   const updateItem = (id: string, field: keyof LicenseItem, value: string) => {
-    const newItems = data.items.map(item => 
+    const newItems = data.items.map(item =>
       item.id === id ? { ...item, [field]: value } : item
     );
     handleUpdate('items', newItems);
@@ -105,15 +118,44 @@ const App: React.FC = () => {
 
   const saveToDatabase = () => {
     setSaveStatus('saving');
-    const updatedReports = [...savedReports];
-    const index = updatedReports.findIndex(r => r.id === data.id);
-    index >= 0 ? (updatedReports[index] = data) : updatedReports.unshift(data);
-    localStorage.setItem(DB_KEY, JSON.stringify(updatedReports));
-    setSavedReports(updatedReports);
-    setTimeout(() => {
-      setSaveStatus('success');
-      setTimeout(() => setSaveStatus('idle'), 2000);
-    }, 800);
+    fetch('/api/terms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(res => {
+        if (!res.ok) throw new Error(`Erro ao salvar: ${res.status}`);
+        return res.json() as Promise<ReportData>;
+      })
+      .then(saved => {
+        setSavedReports(prev => {
+          const index = prev.findIndex(r => r.id === saved.id);
+          if (index >= 0) {
+            const updated = [...prev];
+            updated[index] = saved;
+            return updated;
+          }
+          return [saved, ...prev];
+        });
+        setSaveStatus('success');
+        setTimeout(() => setSaveStatus('idle'), 2000);
+      })
+      .catch(err => {
+        console.error('Erro ao salvar termo:', err);
+        setSaveStatus('error');
+        setTimeout(() => setSaveStatus('idle'), 3000);
+      });
+  };
+
+  const deleteReport = (id: string) => {
+    fetch(`/api/terms/${id}`, { method: 'DELETE' })
+      .then(res => {
+        if (!res.ok) throw new Error(`Erro ao deletar: ${res.status}`);
+        setSavedReports(prev => prev.filter(r => r.id !== id));
+      })
+      .catch(err => {
+        console.error('Erro ao deletar termo:', err);
+      });
   };
 
   const downloadPDF = async () => {
@@ -138,7 +180,7 @@ const App: React.FC = () => {
   };
 
   const NavItem = ({ active, onClick, icon, label }: any) => (
-    <button 
+    <button
       onClick={onClick}
       className={`w-full flex items-center gap-3 px-6 py-4 rounded-2xl transition-all font-black text-[10px] uppercase tracking-[0.2em] border ${active ? 'bg-red-600 border-red-500 text-white shadow-lg shadow-red-600/20' : 'bg-transparent border-transparent text-white/40 hover:bg-white/5 hover:text-white'}`}
     >
@@ -183,9 +225,9 @@ const App: React.FC = () => {
           <NavItem active={activeTab === 'Instalacao'} onClick={() => setActiveTab('Instalacao')} icon={<GlobeAltIcon />} label="Instalação" />
           <NavItem active={activeTab === 'Banco'} onClick={() => setActiveTab('Banco')} icon={<ArchiveBoxIcon />} label="Histórico" />
         </nav>
-        <button onClick={saveToDatabase} className="mt-6 w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2">
+        <button onClick={saveToDatabase} disabled={saveStatus === 'saving'} className="mt-6 w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 disabled:opacity-50">
           {saveStatus === 'saving' ? <ArrowPathIcon className="w-4 h-4 animate-spin" /> : <CloudArrowUpIcon className="w-4 h-4" />}
-          {saveStatus === 'success' ? 'Sincronizado' : 'Salvar no Histórico'}
+          {saveStatus === 'success' ? 'Sincronizado' : saveStatus === 'error' ? 'Erro ao salvar' : 'Salvar no Histórico'}
         </button>
       </aside>
 
@@ -217,16 +259,16 @@ const App: React.FC = () => {
                </div>
                <h3 className="text-red-600 font-black text-[10px] uppercase tracking-[0.3em] mb-8">Configurações da Declaração Legal</h3>
                <div className="grid grid-cols-1 gap-8 relative z-10">
-                 <Input 
-                   label="Número do Pregão Eletrônico" 
-                   value={data.pregaoRef} 
-                   onChange={v => handleUpdate('pregaoRef', v)} 
+                 <Input
+                   label="Número do Pregão Eletrônico"
+                   value={data.pregaoRef}
+                   onChange={v => handleUpdate('pregaoRef', v)}
                    placeholder="Ex: Pregão Eletrônico nº 046/2025"
                  />
-                 <Input 
-                   label="Cidade de Realização (Exibida na Declaração)" 
-                   value={data.credentials.city} 
-                   onChange={v => handleUpdate('credentials.city', v)} 
+                 <Input
+                   label="Cidade de Realização (Exibida na Declaração)"
+                   value={data.credentials.city}
+                   onChange={v => handleUpdate('credentials.city', v)}
                    placeholder="Ex: Uberlândia / MG"
                  />
                  <div className="p-6 bg-black/40 border border-white/10 rounded-3xl italic text-xs text-white/40 leading-relaxed">
@@ -260,23 +302,23 @@ const App: React.FC = () => {
                   <h3 className="text-white font-black text-[12px] uppercase tracking-[0.2em]">Licenças para Alunos</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Input 
-                    label="Quantidade de Alunos" 
-                    value={studentItem?.quantity || ''} 
-                    onChange={v => updateItem('alunos-id', 'quantity', v)} 
+                  <Input
+                    label="Quantidade de Alunos"
+                    value={studentItem?.quantity || ''}
+                    onChange={v => updateItem('alunos-id', 'quantity', v)}
                     placeholder="Ex: 2.991"
                   />
-                  <Input 
-                    label="Chave de Licença" 
-                    value={studentItem?.key || ''} 
-                    onChange={v => updateItem('alunos-id', 'key', v)} 
+                  <Input
+                    label="Chave de Licença"
+                    value={studentItem?.key || ''}
+                    onChange={v => updateItem('alunos-id', 'key', v)}
                     className="md:col-span-2"
                   />
                   <div className="md:col-span-3">
                     <label className="block text-[9px] font-black uppercase tracking-widest text-white/40 mb-2 ml-1">Descrição do Objeto</label>
-                    <textarea 
+                    <textarea
                       rows={2}
-                      value={studentItem?.description || ''} 
+                      value={studentItem?.description || ''}
                       onChange={e => updateItem('alunos-id', 'description', e.target.value)}
                       className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-xs text-white/60 focus:border-red-600 outline-none"
                     />
@@ -291,23 +333,23 @@ const App: React.FC = () => {
                   <h3 className="text-white font-black text-[12px] uppercase tracking-[0.2em]">Licenças para Servidores</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <Input 
-                    label="Quantidade de Servidores" 
-                    value={staffItem?.quantity || ''} 
-                    onChange={v => updateItem('servidores-id', 'quantity', v)} 
+                  <Input
+                    label="Quantidade de Servidores"
+                    value={staffItem?.quantity || ''}
+                    onChange={v => updateItem('servidores-id', 'quantity', v)}
                     placeholder="Ex: 450"
                   />
-                  <Input 
-                    label="Chave de Licença" 
-                    value={staffItem?.key || ''} 
-                    onChange={v => updateItem('servidores-id', 'key', v)} 
+                  <Input
+                    label="Chave de Licença"
+                    value={staffItem?.key || ''}
+                    onChange={v => updateItem('servidores-id', 'key', v)}
                     className="md:col-span-2"
                   />
                   <div className="md:col-span-3">
                     <label className="block text-[9px] font-black uppercase tracking-widest text-white/40 mb-2 ml-1">Descrição do Objeto</label>
-                    <textarea 
+                    <textarea
                       rows={2}
-                      value={staffItem?.description || ''} 
+                      value={staffItem?.description || ''}
                       onChange={e => updateItem('servidores-id', 'description', e.target.value)}
                       className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-xs text-white/60 focus:border-blue-600 outline-none"
                     />
@@ -341,7 +383,17 @@ const App: React.FC = () => {
 
           {activeTab === 'Banco' && (
             <div className="grid grid-cols-1 gap-4">
-              {savedReports.length === 0 ? (
+              {isLoadingReports ? (
+                <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10">
+                  <ArrowPathIcon className="w-8 h-8 text-white/20 mx-auto mb-4 animate-spin" />
+                  <p className="text-white/40 font-bold uppercase text-[10px] tracking-widest">Carregando termos...</p>
+                </div>
+              ) : loadError ? (
+                <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-red-500/20">
+                  <XMarkIcon className="w-12 h-12 text-red-500/40 mx-auto mb-4" />
+                  <p className="text-red-400/60 font-bold uppercase text-[10px] tracking-widest">{loadError}</p>
+                </div>
+              ) : savedReports.length === 0 ? (
                 <div className="text-center py-20 bg-white/5 rounded-[40px] border border-dashed border-white/10">
                   <ArchiveBoxIcon className="w-12 h-12 text-white/10 mx-auto mb-4" />
                   <p className="text-white/40 font-bold uppercase text-[10px] tracking-widest">Nenhum termo salvo ainda</p>
@@ -361,11 +413,7 @@ const App: React.FC = () => {
                       <button onClick={() => setData(report)} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10">
                         <ArrowPathIcon className="w-4 h-4" />
                       </button>
-                      <button onClick={() => {
-                        const filtered = savedReports.filter(r => r.id !== report.id);
-                        setSavedReports(filtered);
-                        localStorage.setItem(DB_KEY, JSON.stringify(filtered));
-                      }} className="p-3 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 rounded-xl transition-all border border-white/10">
+                      <button onClick={() => deleteReport(report.id)} className="p-3 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 rounded-xl transition-all border border-white/10">
                         <TrashIcon className="w-4 h-4" />
                       </button>
                     </div>
@@ -383,9 +431,9 @@ const App: React.FC = () => {
 const Input = ({ label, value, onChange, type = "text", placeholder, className = "" }: any) => (
   <div className={className}>
     <label className="block text-[9px] font-black uppercase tracking-widest text-white/40 mb-2 ml-1">{label}</label>
-    <input 
-      type={type} 
-      value={value} 
+    <input
+      type={type}
+      value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       className="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:border-red-600 outline-none transition-all placeholder:text-white/10"
