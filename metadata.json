@@ -1,0 +1,7 @@
+{
+  "name": "Smart Tech - Emissor de Termos",
+  "description": "Sistema oficial de geração de Termos de Entrega de Licença Perpétua de Software.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
