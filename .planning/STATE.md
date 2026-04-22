@@ -5,16 +5,16 @@
 See: .planning/PROJECT.md (updated 2026-04-22)
 
 **Core value:** Usuário autenticado cria, salva e imprime termos de entrega de licença de forma rápida e segura.
-**Current focus:** Milestone v1.0 — Executando Fase 5 (Migração do Frontend)
+**Current focus:** Milestone v1.0 — COMPLETO. Todas as 6 fases executadas.
 
 ## Current Position
 
 Phase: Fase 6 — Docker + Deploy
-Plan: 06-03 (próximo) — 06-02 concluído
-Status: Fases 1-5 completas. Fase 6 em andamento (2/3 planos).
-Last activity: 2026-04-22 — 05-03 executado: AuthGuard integrado no entry point, TypeScript sem erros, Fase 5 completa
+Plan: 06-03 — CONCLUÍDO
+Status: Todas as 6 fases completas. Milestone v1.0 entregue.
+Last activity: 2026-04-22 — 06-03 executado: smoke test Docker validado, app na porta 8095
 
-Progress: [█████████░] 90%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
@@ -37,6 +37,7 @@ Ver PROJECT.md Key Decisions para log completo.
 
 - Setup inicial: Milestone v1.0 definido a partir do CLAUDE.md — backend Hono + Better Auth + PostgreSQL + proxy Gemini + Docker
 - 05-01: saveStatus expandido para incluir 'error'; botão salvar desabilitado durante saving; lista atualizada com dado retornado pelo servidor
+- 06-03: DATABASE_URL dummy no Dockerfile.api para prisma generate; override de DATABASE_URL no docker-compose para hostname interno postgres:5432
 
 ### Pending Todos
 
@@ -50,5 +51,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Completed 05-03-PLAN.md — AuthGuard integrado no entry point, Fase 5 completa
+Stopped at: Completed 06-03-PLAN.md — smoke test Docker validado, Fase 6 completa, Milestone v1.0 entregue
 Resume file: None

@@ -111,7 +111,7 @@ Plans:
 Plans:
 - [x] 06-01: Criar `Dockerfile.api`, `Dockerfile.nginx` e `nginx.conf`
 - [x] 06-02: Criar `docker-compose.yml` com serviços postgres, api, nginx
-- [ ] 06-03: Testar build e smoke test completo no Docker
+- [x] 06-03: Testar build e smoke test completo no Docker
 
 ## Progress
 
@@ -122,4 +122,4 @@ Plans:
 | 3. API de Termos | 2/2 | Completa | 2026-04-22 |
 | 4. Proxy Gemini | 2/2 | Completa | 2026-04-22 |
 | 5. Migração do Frontend | 3/3 | Completa | 2026-04-22 |
-| 6. Docker + Deploy | 2/3 | Em andamento | - |
+| 6. Docker + Deploy | 3/3 | Completa | 2026-04-22 |
