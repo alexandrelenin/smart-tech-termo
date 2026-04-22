@@ -5,14 +5,14 @@
 See: .planning/PROJECT.md (updated 2026-04-22)
 
 **Core value:** Usuário autenticado cria, salva e imprime termos de entrega de licença de forma rápida e segura.
-**Current focus:** Milestone v1.0 — definindo fases (mapeamento de codebase pendente)
+**Current focus:** Milestone v1.0 — Fase 1 planejada, pronta para execução
 
 ## Current Position
 
-Phase: Não iniciada (definindo requisitos)
-Plan: —
-Status: Pronto para iniciar Fase 1
-Last activity: 2026-04-22 — Milestone v1.0 iniciado, estrutura GSD criada
+Phase: Fase 1 — Backend Foundation
+Plan: 3 planos criados (01-01, 01-02, 01-03)
+Status: Pronto para executar Fase 1
+Last activity: 2026-04-22 — Fase 1 planejada (3 planos, 3 waves)
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -43,12 +43,11 @@ None yet.
 
 ### Blockers/Concerns
 
-- Mapeamento de codebase (`/gsd-map-codebase`) ainda não executado — recomendado antes de iniciar Fase 1
 - Verificar se credenciais Google OAuth já estão configuradas (reutilizar de outros apps Smart Tech)
-- Confirmar DATABASE_URL e BETTER_AUTH_SECRET no `.env`
+- Confirmar DATABASE_URL e BETTER_AUTH_SECRET no `.env` antes de executar Fase 1
 
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Estrutura GSD criada (PROJECT.md, REQUIREMENTS.md, ROADMAP.md, STATE.md)
+Stopped at: Fase 1 planejada — 3 planos (01-01, 01-02, 01-03), verificação passou
 Resume file: None
