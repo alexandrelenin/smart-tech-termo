@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Term {
+  id                  String   @id
+  ownerId             String
+  reportNumber        String
+  processRef          String?
+  pregaoRef           String?
+  contractRef         String?
+  date                String
+  contratante         Json
+  contratada          Json
+  softwareDescription String
+  items               Json
+  techResponsible     Json
+  installation        Json
+  credentials         Json
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("terms")
+}
