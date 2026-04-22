@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-04-22)
 ## Current Position
 
 Phase: Fase 5 — Migração do Frontend
-Plan: 05-02 (próximo) — 05-01 concluído
-Status: Fases 1-4 completas. Fase 5 em andamento (1/3 planos).
-Last activity: 2026-04-22 — 05-01 executado: localStorage removido de App.tsx, fetch API REST implementado
+Plan: 05-03 (próximo) — 05-02 concluído
+Status: Fases 1-4 completas. Fase 5 em andamento (2/3 planos).
+Last activity: 2026-04-22 — 05-02 executado: services/gemini.ts removido, GEMINI_API_KEY confinada ao servidor
 
-Progress: [████████░░] 70%
+Progress: [█████████░] 80%
 
 ## Performance Metrics
 
@@ -50,5 +50,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Completed 05-01-PLAN.md — localStorage removido de App.tsx, fetch /api/terms implementado
+Stopped at: Completed 05-02-PLAN.md — services/gemini.ts removido, GEMINI_API_KEY confinada ao servidor
 Resume file: None
