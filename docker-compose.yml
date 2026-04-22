@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: termo
+      POSTGRES_PASSWORD: termo
+      POSTGRES_DB: termo
+    volumes:
+      - ~/data/smart-tech-termo/postgres:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks: [internal]
+
+  api:
+    build: { context: ., dockerfile: Dockerfile.api }
+    env_file: .env
+    depends_on: [postgres]
+    ports:
+      - "3001:3001"
+    networks: [internal]
+
+  nginx:
+    build: { context: ., dockerfile: Dockerfile.nginx }
+    ports: ["8095:80"]
+    depends_on: [api]
+    networks: [internal]
+
+networks:
+  internal:
