@@ -10,11 +10,11 @@ See: .planning/PROJECT.md (updated 2026-04-22)
 ## Current Position
 
 Phase: Fase 5 — Migração do Frontend
-Plan: 3 planos (05-01, 05-02, 05-03) — Wave 1 em execução
-Status: Fases 1-4 completas. Executando Fase 5.
-Last activity: 2026-04-22 — Fases 1-4 implementadas, tracking sincronizado
+Plan: 05-02 (próximo) — 05-01 concluído
+Status: Fases 1-4 completas. Fase 5 em andamento (1/3 planos).
+Last activity: 2026-04-22 — 05-01 executado: localStorage removido de App.tsx, fetch API REST implementado
 
-Progress: [████████░░] 66%
+Progress: [████████░░] 70%
 
 ## Performance Metrics
 
@@ -36,6 +36,7 @@ Progress: [████████░░] 66%
 Ver PROJECT.md Key Decisions para log completo.
 
 - Setup inicial: Milestone v1.0 definido a partir do CLAUDE.md — backend Hono + Better Auth + PostgreSQL + proxy Gemini + Docker
+- 05-01: saveStatus expandido para incluir 'error'; botão salvar desabilitado durante saving; lista atualizada com dado retornado pelo servidor
 
 ### Pending Todos
 
@@ -49,5 +50,5 @@ None yet.
 ## Session Continuity
 
 Last session: 2026-04-22
-Stopped at: Fase 1 planejada — 3 planos (01-01, 01-02, 01-03), verificação passou
+Stopped at: Completed 05-01-PLAN.md — localStorage removido de App.tsx, fetch /api/terms implementado
 Resume file: None
