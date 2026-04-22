@@ -28,9 +28,9 @@ Migração do app de frontend-only (localStorage) para uma aplicação full-stac
 **Plans:** 3 planos
 
 Plans:
-- [ ] 01-01-PLAN.md — Instalar dependências do servidor, criar .env e .gitignore
-- [ ] 01-02-PLAN.md — Criar server/index.ts, server/prisma.ts e prisma/schema.prisma
-- [ ] 01-03-PLAN.md — [BLOCKING] Rodar migrate dev e verificar healthcheck do servidor
+- [x] 01-01-PLAN.md — Instalar dependências do servidor, criar .env e .gitignore
+- [x] 01-02-PLAN.md — Criar server/index.ts, server/prisma.ts e prisma/schema.prisma
+- [x] 01-03-PLAN.md — [BLOCKING] Rodar migrate dev e verificar healthcheck do servidor
 
 #### Fase 2: Autenticação Better Auth
 
@@ -45,9 +45,9 @@ Plans:
   5. `GET /api/auth/session` retorna dados do usuário autenticado
 
 Plans:
-- [ ] 02-01: Instalar `better-auth` e criar `server/auth.ts` com email+Google configurados
-- [ ] 02-02: Registrar rotas de auth no Hono (`/api/auth/*`) e testar endpoints
-- [ ] 02-03: Criar `src/lib/auth-client.ts` e `src/components/AuthGuard.tsx` no frontend
+- [x] 02-01: Instalar `better-auth` e criar `server/auth.ts` com email+Google configurados
+- [x] 02-02: Registrar rotas de auth no Hono (`/api/auth/*`) e testar endpoints
+- [x] 02-03: Criar `src/lib/auth-client.ts` e `src/components/AuthGuard.tsx` no frontend
 
 #### Fase 3: API de Termos (CRUD)
 
@@ -62,8 +62,8 @@ Plans:
   5. Requisição sem sessão válida recebe 401
 
 Plans:
-- [ ] 03-01: Criar `server/routes/terms.ts` com GET list, GET by id, POST upsert, DELETE
-- [ ] 03-02: Registrar rotas no `server/index.ts` e testar com autenticação
+- [x] 03-01: Criar `server/routes/terms.ts` com GET list, GET by id, POST upsert, DELETE
+- [x] 03-02: Registrar rotas no `server/index.ts` e testar com autenticação
 
 #### Fase 4: Proxy Gemini
 
@@ -77,8 +77,8 @@ Plans:
   4. Rota rejeita request sem sessão (401)
 
 Plans:
-- [ ] 04-01: Criar `server/routes/gemini.ts` movendo a lógica de `services/gemini.ts`
-- [ ] 04-02: Registrar rotas e remover `services/gemini.ts` do frontend
+- [x] 04-01: Criar `server/routes/gemini.ts` movendo a lógica de `services/gemini.ts`
+- [x] 04-02: Registrar rotas e remover `services/gemini.ts` do frontend
 
 #### Fase 5: Migração do Frontend
 
@@ -109,17 +109,17 @@ Plans:
   4. Dados persistem em `~/data/smart-tech-termo/postgres`
 
 Plans:
-- [ ] 06-01: Criar `Dockerfile.api`, `Dockerfile.nginx` e `nginx.conf`
-- [ ] 06-02: Criar `docker-compose.yml` com serviços postgres, api, nginx
+- [x] 06-01: Criar `Dockerfile.api`, `Dockerfile.nginx` e `nginx.conf`
+- [x] 06-02: Criar `docker-compose.yml` com serviços postgres, api, nginx
 - [ ] 06-03: Testar build e smoke test completo no Docker
 
 ## Progress
 
 | Fase | Planos Completos | Status | Concluída |
 |------|------------------|--------|-----------|
-| 1. Backend Foundation | 0/3 | Em planejamento | - |
-| 2. Autenticação Better Auth | 0/3 | Não iniciada | - |
-| 3. API de Termos | 0/2 | Não iniciada | - |
-| 4. Proxy Gemini | 0/2 | Não iniciada | - |
-| 5. Migração do Frontend | 0/3 | Não iniciada | - |
-| 6. Docker + Deploy | 0/3 | Não iniciada | - |
+| 1. Backend Foundation | 3/3 | Completa | 2026-04-22 |
+| 2. Autenticação Better Auth | 3/3 | Completa | 2026-04-22 |
+| 3. API de Termos | 2/2 | Completa | 2026-04-22 |
+| 4. Proxy Gemini | 2/2 | Completa | 2026-04-22 |
+| 5. Migração do Frontend | 0/3 | Em execução | - |
+| 6. Docker + Deploy | 2/3 | Em andamento | - |
