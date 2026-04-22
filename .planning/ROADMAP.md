@@ -25,10 +25,12 @@ Migração do app de frontend-only (localStorage) para uma aplicação full-stac
   3. `npx prisma migrate dev` aplica o schema sem erros
   4. PrismaClient conecta ao banco PostgreSQL local
 
+**Plans:** 3 planos
+
 Plans:
-- [ ] 01-01: Instalar dependências do servidor (hono, @hono/node-server, prisma, @prisma/client, tsx, dotenv)
-- [ ] 01-02: Criar `server/index.ts`, `server/prisma.ts`, `prisma/schema.prisma` e `.env`
-- [ ] 01-03: Rodar migrate dev e verificar conexão com banco
+- [ ] 01-01-PLAN.md — Instalar dependências do servidor, criar .env e .gitignore
+- [ ] 01-02-PLAN.md — Criar server/index.ts, server/prisma.ts e prisma/schema.prisma
+- [ ] 01-03-PLAN.md — [BLOCKING] Rodar migrate dev e verificar healthcheck do servidor
 
 #### Fase 2: Autenticação Better Auth
 
@@ -115,7 +117,7 @@ Plans:
 
 | Fase | Planos Completos | Status | Concluída |
 |------|------------------|--------|-----------|
-| 1. Backend Foundation | 0/3 | Não iniciada | - |
+| 1. Backend Foundation | 0/3 | Em planejamento | - |
 | 2. Autenticação Better Auth | 0/3 | Não iniciada | - |
 | 3. API de Termos | 0/2 | Não iniciada | - |
 | 4. Proxy Gemini | 0/2 | Não iniciada | - |
