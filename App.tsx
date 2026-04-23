@@ -225,6 +225,13 @@ const App: React.FC = () => {
           <NavItem active={activeTab === 'Instalacao'} onClick={() => setActiveTab('Instalacao')} icon={<GlobeAltIcon />} label="Instalação" />
           <NavItem active={activeTab === 'Banco'} onClick={() => setActiveTab('Banco')} icon={<ArchiveBoxIcon />} label="Histórico" />
         </nav>
+        <button
+          onClick={() => setData({ ...initialData, id: Date.now().toString() })}
+          className="mt-6 w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95"
+        >
+          <PlusIcon className="w-4 h-4" />
+          Novo Termo
+        </button>
         <button onClick={saveToDatabase} disabled={saveStatus === 'saving'} className="mt-6 w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 disabled:opacity-50">
           {saveStatus === 'saving' ? <ArrowPathIcon className="w-4 h-4 animate-spin" /> : <CloudArrowUpIcon className="w-4 h-4" />}
           {saveStatus === 'success' ? 'Sincronizado' : saveStatus === 'error' ? 'Erro ao salvar' : 'Salvar no Histórico'}
