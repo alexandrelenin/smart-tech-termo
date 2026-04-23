@@ -417,8 +417,13 @@ const App: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <button onClick={() => setData(report)} className="p-3 bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10">
-                        <ArrowPathIcon className="w-4 h-4" />
+                      <button
+                        onClick={() => setData(report)}
+                        aria-label="Carregar este termo no editor"
+                        className="px-3 py-2 bg-white/5 hover:bg-white/10 rounded-xl transition-all border border-white/10 flex items-center gap-2"
+                      >
+                        <ArrowDownTrayIcon className="w-4 h-4" />
+                        <span className="text-[9px] font-black uppercase tracking-widest">Carregar</span>
                       </button>
                       <button onClick={() => deleteReport(report.id)} className="p-3 bg-white/5 hover:bg-red-500/20 text-white/40 hover:text-red-500 rounded-xl transition-all border border-white/10">
                         <TrashIcon className="w-4 h-4" />
