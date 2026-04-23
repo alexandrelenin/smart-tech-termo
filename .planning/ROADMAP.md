@@ -125,9 +125,9 @@ Plans:
   4. Navegação entre termos salvos clara (histórico vs editor)
 
 Plans:
-- [ ] 07-01-PLAN.md — Aplicar dark theme completo em AuthGuard.tsx (page, card, inputs, submit button, loading state)
+- [x] 07-01-PLAN.md — Aplicar dark theme completo em AuthGuard.tsx (page, card, inputs, submit button, loading state)
 - [ ] 07-02-PLAN.md — Adicionar SVG Google "G" 4-cores, separador "ou" e aria-label no botão Google OAuth
-- [ ] 07-03-PLAN.md — Adicionar botão "Novo Termo" na sidebar e melhorar botão "carregar" do Histórico (App.tsx)
+- [x] 07-03-PLAN.md — Adicionar botão "Novo Termo" na sidebar e melhorar botão "carregar" do Histórico (App.tsx)
 
 ## Progress
 
