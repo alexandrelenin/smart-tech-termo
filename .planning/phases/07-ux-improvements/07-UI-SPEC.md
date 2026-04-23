@@ -43,30 +43,34 @@ Declared values (must be multiples of 4):
 | 3xl | 64px | Page-level spacing |
 
 Exceptions:
-- Touch targets on icon-only action buttons: minimum 44px × 44px (Google button, Novo Termo)
-- Login card: max-w-sm (384px), p-8 (32px padding) — preserve existing
+- Touch targets on icon-only action buttons: minimum 44px × 44px (44 ÷ 4 = 11, a multiple of 4; this is the WCAG accessibility touch target minimum). Applies to Google button and Novo Termo button.
+- Login card: max-w-sm (384px), p-8 (32px padding) — preserve existing.
 
 ---
 
 ## Typography
 
+Two weights only: 400 (normal) and 900 (font-black). Four sizes only.
+
 Existing app typography (source: App.tsx inline classes — do not change):
 
-| Role | Size | Weight | Line Height |
-|------|------|--------|-------------|
-| Body / input | 14px (text-sm) | 400 (normal) | 1.5 |
-| Label / nav | 10px (text-[10px]) | 900 (font-black) | 1.0 |
-| Heading | 36px (text-4xl) | 900 (font-black) | 1.2 |
-| Display | 12px (text-xs) | 900 (font-black, uppercase, tracking-widest) | 1.0 |
+| Role | Size | Weight | Line Height | Notes |
+|------|------|--------|-------------|-------|
+| Body / input | 14px (text-sm) | 400 (normal) | 1.5 | Form fields, body text |
+| Label / nav | 10px (text-[10px]) | 900 (font-black) | 1.0 | Nav labels, uppercase tracking-widest, also used for Display/badge roles |
+| Heading | 36px (text-4xl) | 900 (font-black) | 1.2 | Page-level heading |
+| Subheading | 20px (text-xl) | 900 (font-black) | 1.2 | Login page title, section headings |
 
 Login screen typography (AuthGuard.tsx — fixes apply here):
 
 | Role | Size | Weight | Line Height |
 |------|------|--------|-------------|
-| Page title | 20px (text-xl) | 600 (font-semibold) | 1.2 |
-| Input text | 14px (text-sm) | 400 | 1.5 |
-| Helper / link | 14px (text-sm) | 400 | 1.5 |
-| Button label | 14px (text-sm) | 500 (font-medium) | 1.0 |
+| Page title | 20px (text-xl) | 900 (font-black) | 1.2 |
+| Input text | 14px (text-sm) | 400 (normal) | 1.5 |
+| Helper / link | 14px (text-sm) | 400 (normal) | 1.5 |
+| Button label | 14px (text-sm) | 900 (font-black) | 1.0 |
+
+Weight mapping applied to AuthGuard.tsx: font-semibold (600) → font-black (900); font-medium (500) → font-black (900). Only 400 and 900 are permitted in this phase.
 
 **Fix required:** Login screen currently uses light theme (`bg-gray-50`/white card). It must be aligned to the dark theme of the app: `bg-[#080808]` page background, `bg-[#111111]` card, `text-white` body text. Contrast ratio for all text on card must meet WCAG AA (4.5:1 minimum for body text).
 
@@ -108,7 +112,7 @@ Accent reserved for:
 
 **Google button specific:**
 - Background: bg-white
-- Text: text-gray-700 (text-sm font-medium)
+- Text: text-gray-700 (text-sm font-black)
 - Border: border border-white/20
 - Icon: Google SVG logo (4-color, 16px × 16px, inline SVG) placed left of label
 - Hover: hover:bg-gray-100
@@ -135,6 +139,7 @@ Accent reserved for:
 | Empty state body (Histórico) | (no body copy — icon only, existing pattern) |
 | Error state (load failure) | Não foi possível carregar os termos. Verifique a conexão com o servidor. |
 | Delete confirmation | none — immediate delete with visual feedback only (existing pattern, keep) |
+| Histórico "carregar" button | icon + text label "Carregar" — NOT icon-only. aria-label="Carregar este termo no editor" on the button element regardless. |
 
 ---
 
@@ -142,17 +147,19 @@ Accent reserved for:
 
 ### 07-01: Login screen (AuthGuard.tsx)
 
+**Focal point:** Card centered on dark background with shadow-2xl. Card is the only lit element on the page — all attention converges there.
+
 | Component | Change Type | Spec |
 |-----------|-------------|------|
 | Page wrapper div | Modify | bg-gray-50 → bg-[#080808] |
 | Card div | Modify | bg-white → bg-[#111111] border border-white/10 rounded-2xl shadow-2xl |
-| Title h1 | Modify | Add text-white; keep text-xl font-semibold |
+| Title h1 | Modify | Add text-white; keep text-xl, change to font-black (was font-semibold) |
 | Name input | Modify | Apply dark input style: bg-black/40 border-white/10 text-white rounded-xl px-4 py-3 text-sm |
 | Email input | Modify | Same dark input style |
 | Password input | Modify | Same dark input style |
 | Error paragraph | Modify | text-red-400 (was text-red-500) |
-| Submit button | Modify | bg-red-600 hover:bg-red-500 text-white py-3 rounded-xl text-sm font-medium |
-| Google button | Redesign | bg-white border border-white/20 text-gray-700 py-3 rounded-xl text-sm font-medium flex items-center justify-center gap-3 hover:bg-gray-100 — add Google SVG icon |
+| Submit button | Modify | bg-red-600 hover:bg-red-500 text-white py-3 rounded-xl text-sm font-black |
+| Google button | Redesign | bg-white border border-white/20 text-gray-700 py-3 rounded-xl text-sm font-black flex items-center justify-center gap-3 hover:bg-gray-100 — add Google SVG icon |
 | Separator | Add | Thin line with "ou" label between email form and Google button: `<div class="relative my-4"><div class="border-t border-white/10" /><span class="absolute left-1/2 -translate-x-1/2 -top-2.5 bg-[#111111] px-2 text-white/30 text-xs">ou</span></div>` |
 | Helper text p | Modify | text-white/40; link → text-red-500 hover:text-red-400 hover:underline |
 
@@ -168,13 +175,14 @@ Use the standard Google "G" logo paths (red/blue/yellow/green). No external imag
 
 ### 07-03: "Novo Termo" button + navigation (App.tsx)
 
+**Focal point:** Active tab content area is the primary focal point in the editor. Sidebar actions (Novo Termo, Salvar) are secondary focal points anchored to the bottom of the sidebar.
+
 | Component | Change Type | Spec |
 |-----------|-------------|------|
 | "Novo Termo" button | Add | Placed in sidebar, above the "Salvar no Histórico" button. Style: w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all |
 | "Novo Termo" icon | Add | PlusIcon w-4 h-4 from @heroicons/react (already imported) |
 | "Novo Termo" action | Add | Resets `data` to `{ ...initialData, id: Date.now().toString() }` — new ID each time |
-| Histórico "carregar" button tooltip | Add | aria-label="Carregar este termo no editor" |
-| Histórico "carregar" button visual | Clarify | Swap ArrowPathIcon for ArrowDownTrayIcon (already imported) to signal "load into editor" rather than "refresh". Keep same size/style. |
+| Histórico "carregar" button | Modify | Icon + text label "Carregar". Swap ArrowPathIcon for ArrowDownTrayIcon (already imported) to signal "load into editor" rather than "refresh". Keep same size/style. aria-label="Carregar este termo no editor". |
 
 **"Novo Termo" button placement in sidebar:**
 ```
@@ -219,13 +227,14 @@ Use the standard Google "G" logo paths (red/blue/yellow/green). No external imag
 
 ## Accessibility
 
-- All interactive elements must have accessible labels
-- Google button: aria-label="Entrar com Google" if icon-only; with text label, aria-label not needed
-- Novo Termo button: text label present, no additional aria required
-- Minimum touch target: 44px height on all buttons (py-3 = 12px × 2 + font = ~40px — use py-3.5 if needed to reach 44px)
-- Color contrast: white text (#ffffff) on red-600 (#dc2626) = 4.6:1 (WCAG AA pass)
-- Color contrast: white text (#ffffff) on #111111 = 18.1:1 (WCAG AAA pass)
-- Color contrast: white/40 (#ffffff at 40%) on #111111 = ~4.7:1 (WCAG AA pass for large text labels)
+- All interactive elements must have accessible labels.
+- Google button: aria-label="Entrar com Google" — button has text label, but declare aria-label for robustness.
+- Novo Termo button: text label present, no additional aria required.
+- Histórico "carregar" button: aria-label="Carregar este termo no editor" (icon + text, aria-label still declared for screen reader clarity).
+- Minimum touch target: 44px height on all buttons (py-3 = 12px × 2 + font = ~40px — use py-3.5 if needed to reach 44px).
+- Color contrast: white text (#ffffff) on red-600 (#dc2626) = 4.6:1 (WCAG AA pass).
+- Color contrast: white text (#ffffff) on #111111 = 18.1:1 (WCAG AAA pass).
+- Color contrast: white/40 (#ffffff at 40%) on #111111 = ~4.7:1 (WCAG AA pass for large text labels).
 
 ---
 
