@@ -113,6 +113,21 @@ Plans:
 - [x] 06-02: Criar `docker-compose.yml` com serviços postgres, api, nginx
 - [x] 06-03: Testar build e smoke test completo no Docker
 
+#### Fase 7: Melhorias de UX pós-UAT
+
+**Goal**: Tela de login legível com Google OAuth e editor com fluxo claro de criação de termos
+**Depends on**: Fase 6
+**Success Criteria** (o que deve ser VERDADE):
+  1. Tela de login tem contraste adequado (texto legível em fundo escuro)
+  2. Botão "Entrar com Google" presente e funcional na tela de login
+  3. Botão "Novo Termo" visível e acessível no editor
+  4. Navegação entre termos salvos clara (histórico vs editor)
+
+Plans:
+- [ ] 07-01: Corrigir layout e contraste da tela de login (`AuthGuard.tsx`)
+- [ ] 07-02: Adicionar botão Google OAuth na tela de login
+- [ ] 07-03: Adicionar botão "Novo Termo" e melhorar navegação no editor (`App.tsx`)
+
 ## Progress
 
 | Fase | Planos Completos | Status | Concluída |
@@ -123,3 +138,4 @@ Plans:
 | 4. Proxy Gemini | 2/2 | Completa | 2026-04-22 |
 | 5. Migração do Frontend | 3/3 | Completa | 2026-04-22 |
 | 6. Docker + Deploy | 3/3 | Completa | 2026-04-22 |
+| 7. Melhorias de UX pós-UAT | 0/3 | Não iniciada | — |

@@ -31,6 +31,10 @@ Progress: [██████████] 100%
 
 ## Accumulated Context
 
+### Roadmap Evolution
+
+- Fase 7 adicionada: Melhorias de UX pós-UAT (login contrast, Google OAuth, botão Novo Termo)
+
 ### Decisions
 
 Ver PROJECT.md Key Decisions para log completo.
