@@ -117,6 +117,7 @@ Plans:
 
 **Goal**: Tela de login legível com Google OAuth e editor com fluxo claro de criação de termos
 **Depends on**: Fase 6
+**Plans:** 3 planos
 **Success Criteria** (o que deve ser VERDADE):
   1. Tela de login tem contraste adequado (texto legível em fundo escuro)
   2. Botão "Entrar com Google" presente e funcional na tela de login
@@ -124,9 +125,9 @@ Plans:
   4. Navegação entre termos salvos clara (histórico vs editor)
 
 Plans:
-- [ ] 07-01: Corrigir layout e contraste da tela de login (`AuthGuard.tsx`)
-- [ ] 07-02: Adicionar botão Google OAuth na tela de login
-- [ ] 07-03: Adicionar botão "Novo Termo" e melhorar navegação no editor (`App.tsx`)
+- [ ] 07-01-PLAN.md — Aplicar dark theme completo em AuthGuard.tsx (page, card, inputs, submit button, loading state)
+- [ ] 07-02-PLAN.md — Adicionar SVG Google "G" 4-cores, separador "ou" e aria-label no botão Google OAuth
+- [ ] 07-03-PLAN.md — Adicionar botão "Novo Termo" na sidebar e melhorar botão "carregar" do Histórico (App.tsx)
 
 ## Progress
 
