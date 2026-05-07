@@ -64,6 +64,22 @@ const initialData: ReportData = {
   }
 };
 
+const emptyData: ReportData = {
+  id: '',
+  reportNumber: '',
+  processRef: '',
+  pregaoRef: '',
+  contractRef: '',
+  date: new Date().toISOString().split('T')[0],
+  contratante: { name: '', address: '', cnpj: '', representative: '', cpf: '' },
+  contratada: { name: '', address: '', cnpj: '', representative: '', cpf: '' },
+  softwareDescription: '',
+  items: [],
+  techResponsible: { name: '', rg: '' },
+  installation: { environment: '', restrictedTo: '', accessLink: '' },
+  credentials: { username: '', password: '', city: '' }
+};
+
 const App: React.FC = () => {
   const [data, setData] = useState<ReportData>(initialData);
   const [savedReports, setSavedReports] = useState<ReportData[]>([]);
@@ -226,7 +242,7 @@ const App: React.FC = () => {
           <NavItem active={activeTab === 'Banco'} onClick={() => setActiveTab('Banco')} icon={<ArchiveBoxIcon />} label="Histórico" />
         </nav>
         <button
-          onClick={() => { setData({ ...initialData, id: Date.now().toString() }); setActiveTab('Geral'); }}
+          onClick={() => { setData({ ...emptyData, id: Date.now().toString() }); setActiveTab('Geral'); }}
           className="mt-6 w-full py-3 bg-red-600 hover:bg-red-500 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest flex items-center justify-center gap-2 transition-all active:scale-95"
         >
           <PlusIcon className="w-4 h-4" />
