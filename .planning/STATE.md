@@ -2,58 +2,49 @@
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-22)
+See: .planning/PROJECT.md (updated 2026-05-07)
 
 **Core value:** Usuário autenticado cria, salva e imprime termos de entrega de licença de forma rápida e segura.
-**Current focus:** Milestone v1.0 — COMPLETO. Todas as 6 fases executadas.
+**Current focus:** Milestone v1.0 SHIPPED 2026-05-07. Aguardando definição do próximo milestone.
 
 ## Current Position
 
-Phase: Fase 7 — Melhorias de UX pós-UAT — COMPLETA
-Plan: 3/3 planos executados, UAT 3/3 passou
-Status: Verified
-Last activity: 2026-05-07 — UAT fase 7 completo após fix do Novo Termo (emptyData)
+Phase: — (sem fase ativa)
+Plan: —
+Status: Idle — milestone v1.0 arquivado
+Last activity: 2026-05-07 — Milestone v1.0 completado e arquivado
 
-Progress: [██████████] 100%
+Progress: v1.0 [██████████] 100% — SHIPPED
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 0
-- Average duration: —
-- Total execution time: —
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| - | - | - | - |
+- Total plans completed (v1.0): 19
+- Phases (v1.0): 7
+- Duration: 2026-04-22 → 2026-05-07 (~16 dias)
+- Commits: 59
+- LOC: +10281 / −164
 
 ## Accumulated Context
 
 ### Roadmap Evolution
 
-- Fase 7 adicionada: Melhorias de UX pós-UAT (login contrast, Google OAuth, botão Novo Termo)
+- v1.0 originalmente escopado para 6 fases. Fase 7 (UX pós-UAT) inserida após UAT da Fase 6 revelar lacunas de contraste, branding Google OAuth e UX do "Novo Termo".
 
 ### Decisions
 
 Ver PROJECT.md Key Decisions para log completo.
 
-- Setup inicial: Milestone v1.0 definido a partir do CLAUDE.md — backend Hono + Better Auth + PostgreSQL + proxy Gemini + Docker
-- 05-01: saveStatus expandido para incluir 'error'; botão salvar desabilitado durante saving; lista atualizada com dado retornado pelo servidor
-- 06-03: DATABASE_URL dummy no Dockerfile.api para prisma generate; override de DATABASE_URL no docker-compose para hostname interno postgres:5432
-
 ### Pending Todos
 
-None yet.
+None.
 
 ### Blockers/Concerns
 
-- Verificar se credenciais Google OAuth já estão configuradas (reutilizar de outros apps Smart Tech)
-- Confirmar DATABASE_URL e BETTER_AUTH_SECRET no `.env` antes de executar Fase 1
+None.
 
 ## Session Continuity
 
-Last session: 2026-04-22
-Stopped at: Completed 06-03-PLAN.md — smoke test Docker validado, Fase 6 completa, Milestone v1.0 entregue
-Resume file: None
+Last session: 2026-05-07
+Stopped at: Milestone v1.0 archived (`/gsd-complete-milestone`)
+Resume file: None — próxima sessão começa com `/gsd-new-milestone`
