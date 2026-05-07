@@ -139,4 +139,4 @@ Plans:
 | 4. Proxy Gemini | 2/2 | Completa | 2026-04-22 |
 | 5. Migração do Frontend | 3/3 | Completa | 2026-04-22 |
 | 6. Docker + Deploy | 3/3 | Completa | 2026-04-22 |
-| 7. Melhorias de UX pós-UAT | 0/3 | Não iniciada | — |
+| 7. Melhorias de UX pós-UAT | 3/3 | Completa | 2026-05-07 |
